@@ -140,15 +140,15 @@ class DriveDataGenerator(image.ImageDataGenerator):
                                      img_channel_axis)
         if self.horizontal_flip:
             if np.random.random() < 0.5:
-                x = image.flip_axis(x, img_col_axis)
+                x = image.image.flip_axis(x, img_col_axis)
                 is_image_horizontally_flipped = True
 
         if self.vertical_flip:
             if np.random.random() < 0.5:
-                x = image.flip_axis(x, img_row_axis)
+                x = image.image.flip_axis(x, img_row_axis)
                 
-        if self.brighten_range != 0:
-            random_bright = np.random.uniform(low = 1.0-self.brighten_range, high=1.0+self.brighten_range)
+        if self.brighten_range:
+            random_bright = np.random.uniform(low = self.brighten_range[0], high=self.brighten_range[1])
             
             #TODO: Write this as an apply to push operations into C for performance
             img = cv2.cvtColor(x, cv2.COLOR_RGB2HSV)
